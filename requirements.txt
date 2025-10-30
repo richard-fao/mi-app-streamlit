@@ -5,3 +5,4 @@ altair
 streamlit
 plotly
 openpyxl
+matplotlib

@@ -34,8 +34,16 @@ def load_example_data(filepath='Calificaciones.xlsx') -> pd.DataFrame:
 df = load_example_data()
 
 # ---------------- Título principal ----------------
-st.title("🧩 Resultados PTIES")
-st.write("Universidad de Antioquia")
+t1,t2 = st.columns([0.5,0.5])
+with t1:
+    st.title("🧩 Calificaciones PTIES")
+    col1, col2,col3 = st.columns([0.1,0.2,0.7])
+    col1.image('Escudo-UdeA.png', width=150)
+    col2.markdown("**Universidad de Antioquia**")
+t2.image('PTT.png', width=600)
+
+
+
 st.info("📊 **Notas de las evaluaciones:** Las pruebas de **Matemáticas** y **Lenguaje** se califican de **0 a 30 puntos cada una**. "
     "Cuando se combinan ambas, la calificación total va de **0 a 60 puntos**.")
 

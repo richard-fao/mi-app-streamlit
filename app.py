@@ -12,7 +12,7 @@ import plotly.express as px
 
 # ---------------- Configuración general ----------------
 st.set_page_config(
-    page_title="Resultados PTIES - UdeA",
+    page_title="Calificaciones PTIES - UdeA",
     page_icon="🧩",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -204,4 +204,5 @@ with tabs[1]:
         "Esta sección mostrará los resultados detallados de cada estudiante. "
         "Actualmente está en construcción."
     )
+
 

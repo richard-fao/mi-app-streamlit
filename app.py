@@ -34,10 +34,10 @@ def load_example_data(filepath='Calificaciones.xlsx') -> pd.DataFrame:
 df = load_example_data()
 
 # ---------------- Título principal ----------------
-t1,t2 = st.columns([0.5,0.5])
+t1,t2 = st.columns([0.55,0.45])
 with t1:
     st.title("🧩 Calificaciones PTIES")
-    col1, col2,col3 = st.columns([0.1,0.2,0.7])
+    col1, col2,col3 = st.columns([0.1,0.3,0.6])
     col1.image('Escudo-UdeA.png', width=150)
     col2.markdown("**Universidad de Antioquia**")
 t2.image('PTT.png', width=600)
@@ -204,3 +204,4 @@ with tabs[1]:
         "Esta sección mostrará los resultados detallados de cada estudiante. "
         "Actualmente está en construcción."
     )
+

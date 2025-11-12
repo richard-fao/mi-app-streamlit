@@ -226,12 +226,12 @@ with tabs[0]:
         pdf_base64 = base64.b64encode(pdf_data).decode()
 
         # HTML para incrustar el PDF
-        #pdf_html = f"""
-        #<iframe src="data:application/pdf;base64,{pdf_base64}" width="100%" height="900px"></iframe>
-        #"""
         pdf_html = f"""
-        <iframe src="data:application/pdf;base64,{pdf_base64}" width="100%" height="900px" style="border: none;" sandbox="allow-scripts allow-same-origin"></iframe>
+        <iframe src="data:application/pdf;base64,{pdf_base64}" width="100%" height="900px"></iframe>
         """
+        #pdf_html = f"""
+        #<iframe src="data:application/pdf;base64,{pdf_base64}" width="100%" height="900px" style="border: none;" sandbox="allow-scripts allow-same-origin"></iframe>
+        #"""
 
         # Mostrar el PDF en la aplicación de Streamlit
         st.markdown(pdf_html, unsafe_allow_html=True)

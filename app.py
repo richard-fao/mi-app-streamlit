@@ -39,9 +39,9 @@ t1,t2 = st.columns([0.55,0.45])
 with t1:
     st.title("🧩 Calificaciones PTIES")
     col1, col2,col3 = st.columns([0.1,0.3,0.7])
-    col1.image('IMAGENES\\Escudo-UdeA.png', width=150)
+    col1.image(r'IMAGENES\Escudo-UdeA.png', width=150)
     col2.markdown("**Universidad de Antioquia**")
-t2.image('IMAGENES\\PTT.png', width=600)
+t2.image(r'IMAGENES\PTT.png', width=600)
 
 
 
@@ -220,7 +220,7 @@ with tabs[0]:
     else:
         # Cargar el PDF desde un archivo
         
-        pdf_data = load_pdf(F'SOCIOE\\{sel_municipio}.pdf')
+        pdf_data = load_pdf(f'SOCIOE\{sel_municipio}.pdf')
 
         # Convertir el PDF a base64
         pdf_base64 = base64.b64encode(pdf_data).decode()

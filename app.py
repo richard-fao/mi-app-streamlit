@@ -220,28 +220,18 @@ with tabs[0]:
         pass
     else:
         # Cargar el PDF desde un archivo
-        
         pdf_data = load_pdf(f'SOCIOE/{sel_municipio}.pdf')
-
-        # Convertir el PDF a base64
+        
         pdf_base64 = base64.b64encode(pdf_data).decode()
-
-        # HTML para incrustar el PDF
-        pdf_html = f"""
-        <iframe src="data:application/pdf;base64,{pdf_base64}" width="100%" height="900px"></iframe>
+        
+        html = f"""<embed 
+        src="data:application/pdf;base64,{pdf_base64}"
+        type="application/pdf"
+        width="100%" 
+        height="900px"/>
         """
-        #pdf_html = f"""
-        #<iframe src="data:application/pdf;base64,{pdf_base64}" width="100%" height="900px" style="border: none;" sandbox="allow-scripts allow-same-origin"></iframe>
-        #"""
-
-        # Mostrar el PDF en la aplicación de Streamlit
-        st.markdown(pdf_html, unsafe_allow_html=True)
-
-
-
-
-
-
+        
+        st.components.v1.html(html, height=900, scrolling=True)
 
 
 

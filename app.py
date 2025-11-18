@@ -164,10 +164,14 @@ with tabs[0]:
 
     df_percent = df_filtered.groupby(['COMPETENCIA', 'NIVEL_DE_DESEMPENO']).size().reset_index(name='frecuencia')
     df_percent['porcentaje'] = df_percent.groupby('COMPETENCIA')['frecuencia'].apply(lambda x: 100 * x / x.sum()).values
-
+    
+    df_percent['COMPETENCIA_WRAP'] = df_percent['COMPETENCIA'].apply(
+        lambda x: x.replace("-", "<br>", 1)  # solo primer salto; ajusta según necesites
+    )
+        
     fig_stack = px.bar(
         df_percent,
-        x='COMPETENCIA',
+        x='COMPETENCIA_WRAP',
         y='porcentaje',
         color='NIVEL_DE_DESEMPENO',
         text='porcentaje',
@@ -283,6 +287,10 @@ with tabs[1]:
         df_percent = df_cod.groupby(['COMPETENCIA', 'NIVEL_DE_DESEMPENO']).size().reset_index(name='frecuencia')
         df_percent['porcentaje'] = df_percent.groupby('COMPETENCIA')['frecuencia'].apply(lambda x: 100 * x / x.sum()).values
 
+        df_percent['COMPETENCIA_WRAP'] = df_percent['COMPETENCIA'].apply(
+        lambda x: x.replace("-", "<br>", 1)  # solo primer salto; ajusta según necesites
+        )
+        
         fig_stack = px.bar(
             df_percent,
             x='COMPETENCIA',

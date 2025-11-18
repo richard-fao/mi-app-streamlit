@@ -274,7 +274,7 @@ with tabs[1]:
         # ------------ Desempeño Promedio por Competencia ---------------
         
         df_pivot = df_cod.pivot_table(
-            index='NUM_DOCUMENTO', columns='COMPETENCIA', values='CALIFICACION',
+            index='COMPETENCIA', columns='NUM_DOCUMENTO', values='CALIFICACION',
             aggfunc=lambda x: np.round(x.mean() * 100, 2)
         )
         st.subheader("📊 Desempeño Promedio por Competencia (0-100)")

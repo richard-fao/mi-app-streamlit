@@ -293,7 +293,7 @@ with tabs[1]:
         
         fig_stack = px.bar(
             df_percent,
-            x='COMPETENCIA',
+            x='COMPETENCIA_WRAP',
             y='porcentaje',
             color='NIVEL_DE_DESEMPENO',
             text='porcentaje',

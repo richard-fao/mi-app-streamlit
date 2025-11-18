@@ -224,14 +224,9 @@ with tabs[0]:
         
         pdf_base64 = base64.b64encode(pdf_data).decode()
         
-        html = f"""<embed 
-        src="data:application/pdf;base64,{pdf_base64}"
-        type="application/pdf"
-        width="100%" 
-        height="900px"/>
-        """
+        href = f'<a href="data:application/pdf;base64,{pdf_base64}" target="_blank">Abrir PDF en nueva pestaña</a>'
         
-        st.components.v1.html(html, height=900, scrolling=True)
+        st.markdown(href, unsafe_allow_html=True)
 
 
 

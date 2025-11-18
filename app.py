@@ -219,14 +219,22 @@ with tabs[0]:
     if sel_municipio =='Selección':
         pass
     else:
+        with open(f'SOCIOE/{sel_municipio}.pdf', "rb") as f:
+            pdf_bytes = f.read()
+            st.download_button(label="Abrir PDF",
+                               data=pdf_bytes,
+                               file_name=f"{sel_municipio}.pdf",
+                               mime="application/pdf")
+
+
         # Cargar el PDF desde un archivo
-        pdf_data = load_pdf(f'SOCIOE/{sel_municipio}.pdf')
+        #pdf_data = load_pdf(f'SOCIOE/{sel_municipio}.pdf')
         
-        pdf_base64 = base64.b64encode(pdf_data).decode()
+        #pdf_base64 = base64.b64encode(pdf_data).decode()
         
-        href = f'<a href="data:application/pdf;base64,{pdf_base64}" target="_blank">Abrir PDF en nueva pestaña</a>'
+        #href = f'<a href="data:application/pdf;base64,{pdf_base64}" target="_blank">Abrir PDF en nueva pestaña</a>'
         
-        st.markdown(href, unsafe_allow_html=True)
+        #st.markdown(href, unsafe_allow_html=True)
 
 
 

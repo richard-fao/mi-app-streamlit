@@ -26,7 +26,7 @@ st.set_page_config(
 )
 
 # ---------------- Función para cargar datos ----------------
-@st.cache_data(show_spinner=False)
+#@st.cache_data(show_spinner=False)
 def load_example_data(filepath='Calificaciones.xlsx') -> pd.DataFrame:
     """Carga los datos desde Excel y los cachea para mejorar el rendimiento."""
     df = pd.read_excel(filepath)

@@ -50,7 +50,7 @@ st.info("📊 **Notas de las evaluaciones:** Las pruebas de **Matemáticas** y *
     "Cuando se combinan ambas, la calificación total va de **0 a 60 puntos**.")
 
 # ---------------- Pestañas ----------------
-tabs = st.tabs(['Resultados IEMs'])#, 'Resultados Individuales'])
+tabs = st.tabs(['Resultados IEMs', 'Resultados Individuales'])
 
 # --------------------- PESTAÑA RESULTADOS IEMS ---------------------
 with tabs[0]:
@@ -149,7 +149,9 @@ with tabs[0]:
         )
         fig_box.update_layout(title_font=dict(size=20))
         st.plotly_chart(fig_box, use_container_width=True)
-
+        
+        # ------------ Desempeño Promedio por Competencia ---------------
+        
         df_pivot = df_filtered.pivot_table(
             index='NOMBRE IEM', columns='COMPETENCIA', values='CALIFICACION',
             aggfunc=lambda x: np.round(x.mean() * 100, 2)
@@ -177,8 +179,8 @@ with tabs[0]:
     st.plotly_chart(fig_stack)
 
     st.markdown(
-        "💡 Este gráfico muestra la proporción de estudiantes por nivel de desempeño en cada competencia. "
-        "Las barras están apiladas y representan el 100% de los estudiantes por competencia."
+        "💡 Este gráfico muestra la proporción de respuestas por nivel de desempeño en cada competencia. "
+        "Las barras están apiladas y representan el 100% de las respuestas por competencia."
     )
     st.markdown("---")  # Separador visual
     # ---------------- Selección de competencia para evidencias ----------------
@@ -239,12 +241,85 @@ with tabs[0]:
 
 
 # --------------------- PESTAÑA RESULTADOS INDIVIDUALES ---------------------
-# with tabs[1]:
-#     st.header("👤 Resultados Individuales")
-#     st.markdown(
-#         "Esta sección mostrará los resultados detallados de cada estudiante. "
-#         "Actualmente está en construcción."
-#     )
+with tabs[1]:
+    st.header("👤 Resultados Individuales")
+    st.markdown(
+        "Esta sección mostrará los resultados detallados de cada estudiante. "
+    )
+    selected_cod = st.text_input("Ingrese el código asociado al estudiante:")
+
+    if selected_cod in df['NUM_DOCUMENTO'].unique():
+        df_cod = df[df['NUM_DOCUMENTO']==selected_cod].copy()
+
+        r1, r2, r3 = st.columns(3) 
+
+        r1.metric(
+            "Código",
+            selected_cod
+        )
+
+        r2.metric(
+            "📐 Puntaje Matemáticas",
+            f"{df_cod[df_cod['EVALUACION']=='MATEMATICAS']['CALIFICACION'].sum():.2f}"
+        )
+        r3.metric(
+            "✍️ Puntaje Lenguaje",
+            f"{df_cod[df_cod['EVALUACION']=='LENGUAJE']['CALIFICACION'].sum():.2f}"
+        )
+
+        # ------------ Desempeño Promedio por Competencia ---------------
+        
+        df_pivot = df_cod.pivot_table(
+            index='NUM_DOCUMENTO', columns='COMPETENCIA', values='CALIFICACION',
+            aggfunc=lambda x: np.round(x.mean() * 100, 2)
+        )
+        st.subheader("📊 Desempeño Promedio por Competencia (0-100)")
+        st.dataframe(df_pivot, use_container_width=True)
+
+
+        # ---------------- Gráfico de barras apiladas ----------------
+        st.subheader("📊 Distribución porcentual por Competencia y Nivel de Desempeño")
+
+        df_percent = df_cod.groupby(['COMPETENCIA', 'NIVEL_DE_DESEMPENO']).size().reset_index(name='frecuencia')
+        df_percent['porcentaje'] = df_percent.groupby('COMPETENCIA')['frecuencia'].apply(lambda x: 100 * x / x.sum()).values
+
+        fig_stack = px.bar(
+            df_percent,
+            x='COMPETENCIA',
+            y='porcentaje',
+            color='NIVEL_DE_DESEMPENO',
+            text='porcentaje',
+            category_orders={'NIVEL_DE_DESEMPENO': ['BAJO', 'MEDIO', 'ALTO']},
+            color_discrete_map={'BAJO':'#d62728', 'MEDIO':'#1f77b4', 'ALTO':'#2ca02c'}
+        )
+        fig_stack.update_traces(texttemplate='%{text:.1f}%', textposition='inside')
+        fig_stack.update_layout(yaxis=dict(title='Porcentaje', range=[0, 100]), barmode='stack')
+        st.plotly_chart(fig_stack)
+
+        st.markdown(
+            "💡 Este gráfico muestra la proporción de preguntas por nivel de desempeño en cada competencia. "
+            "Las barras están apiladas y representan el 100% de las preguntas por competencia."
+        )
+        st.markdown("---")
+        # Separador visual
+        # ---------------- Selección de competencia para evidencias ----------------
+        st.info("Selecciona una competencia para ver información más detallada de lo que se está evaluando.")
+        selected_competencia_IND = st.selectbox('* Competencia',
+                                            ['Todas'] + list(df_cod['COMPETENCIA'].unique()))
+
+        if selected_competencia_IND != 'Todas':
+            df_cod = df_cod[df_cod['COMPETENCIA'] == selected_competencia_IND]
+
+        st.subheader("📄 Competencias PTIES")
+        st.dataframe(df_cod['COMPETENCIA_PTIES'].value_counts().index, use_container_width=True)
+
+        st.subheader("📄 Evidencias por Competencia")
+        st.dataframe(df_cod['EVIDENCIA'].value_counts().index, use_container_width=True)
+
+    elif selected_cod:
+        st.markdown("⚠️ ¡Código no encontrado!")
+
+
 
 
 

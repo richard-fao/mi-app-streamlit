@@ -61,7 +61,7 @@ with tabs[0]:
     # ---------------- Filtros ----------------
     f1, f2, f3, f4, f5 = st.columns(5)
 
-    selected_region = f1.selectbox('Región', ['Todos'] + list(df['REGION'].unique()))
+    selected_region = f1.selectbox('Región', ['Todas'] + list(df['REGION'].unique()))
     selected_iem = f2.selectbox('IEM', ['Todas'] + list(df['NOMBRE IEM'].unique()))
     selected_grado = f3.selectbox('Grado', ['Todos', 10, 11])
     selected_evaluacion = f4.selectbox('Evaluación', ['Todas'] + list(df['EVALUACION'].unique()))

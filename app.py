@@ -27,7 +27,7 @@ st.set_page_config(
 
 # ---------------- Función para cargar datos ----------------
 @st.cache_data(show_spinner=False)
-def load_example_data(filepath='Calificaciones.xlsx') -> pd.DataFrame:
+def load_example_data(filepath='Calificaciones_.xlsx') -> pd.DataFrame:
     """Carga los datos desde Excel y los cachea para mejorar el rendimiento."""
     df = pd.read_excel(filepath)
     return df
@@ -61,8 +61,8 @@ with tabs[0]:
     # ---------------- Filtros ----------------
     f1, f2, f3, f4, f5 = st.columns(5)
 
-    selected_iem = f1.selectbox('IEMs', ['Todas'] + list(df['NOMBRE IEM'].unique()))
-    selected_municipio = f2.selectbox('Municipios', ['Todos'] + list(df['MUNICIPIO'].unique()))
+    selected_region = f1.selectbox('Región', ['Todos'] + list(df['REGION'].unique()))
+    selected_iem = f2.selectbox('IEMs', ['Todas'] + list(df['NOMBRE IEM'].unique()))
     selected_grado = f3.selectbox('Grado', ['Todos', 10, 11])
     selected_evaluacion = f4.selectbox('Evaluación', ['Todas'] + list(df['EVALUACION'].unique()))
     selected_genero = f5.selectbox('Género', ['Todos', 'Masculino', 'Femenino'])
@@ -74,8 +74,8 @@ with tabs[0]:
 
     if selected_iem != 'Todas':
         df_filtered = df_filtered[df_filtered['NOMBRE IEM'] == selected_iem]
-    if selected_municipio != 'Todos':
-        df_filtered = df_filtered[df_filtered['MUNICIPIO'] == selected_municipio]
+    if selected_region != 'Todos':
+        df_filtered = df_filtered[df_filtered['REGION'] == selected_region]
     if selected_grado != 'Todos':
         df_filtered = df_filtered[df_filtered['GRADO'] == selected_grado]
     if selected_genero != 'Todos':
@@ -105,7 +105,7 @@ with tabs[0]:
     
 
     # ---------------- Gráfico de caja por IEM o municipio ----------------
-    if selected_iem == 'Todas' and selected_municipio == 'Todos':
+    if selected_iem == 'Todas' and (selected_region == 'Todos' or selected_region == 'ANDINA'):
         df_box = df_filtered.groupby(['MUNICIPIO', 'NUM_DOCUMENTO', 'GRADO'])['CALIFICACION'].sum().reset_index()
         fig_box = px.box(
             df_box, x='MUNICIPIO', y='CALIFICACION', color='MUNICIPIO', points='all',

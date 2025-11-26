@@ -74,7 +74,7 @@ with tabs[0]:
 
     if selected_iem != 'Todas':
         df_filtered = df_filtered[df_filtered['NOMBRE IEM'] == selected_iem]
-    if selected_region != 'Todos':
+    if selected_region != 'Todas':
         df_filtered = df_filtered[df_filtered['REGION'] == selected_region]
     if selected_grado != 'Todos':
         df_filtered = df_filtered[df_filtered['GRADO'] == selected_grado]
@@ -105,7 +105,7 @@ with tabs[0]:
     
 
     # ---------------- Gráfico de caja por IEM o municipio ----------------
-    if selected_iem == 'Todas' and (selected_region == 'Todos' or selected_region == 'ANDINA'):
+    if selected_iem == 'Todas' and (selected_region == 'Todas' or selected_region == 'ANDINA'):
         df_box = df_filtered.groupby(['MUNICIPIO', 'NUM_DOCUMENTO', 'GRADO'])['CALIFICACION'].sum().reset_index()
         fig_box = px.box(
             df_box, x='MUNICIPIO', y='CALIFICACION', color='MUNICIPIO', points='all',

@@ -1,6 +1,7 @@
 datetime
 numpy
 pandas
+altair
 streamlit
 plotly
 openpyxl

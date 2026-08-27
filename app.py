@@ -38,7 +38,7 @@ df = load_example_data()
 # ---------------- Título principal ----------------
 t1,t2 = st.columns([0.55,0.45])
 with t1:
-    st.title("🧩 Calificaciones PTIES")
+    st.title("🧩 Calificaciones PTIES 2025")
     col1, col2,col3 = st.columns([0.1,0.3,0.7])
     col1.image('IMAGENES/Escudo-UdeA.png', width=150)
     col2.markdown("**Universidad de Antioquia**")

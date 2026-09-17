@@ -46,8 +46,8 @@ t2.image('IMAGENES/PTT.png', width=600)
 
 
 
-st.info("📊 **Notas de las evaluaciones:** Las pruebas de **Matemáticas** y **Lenguaje** se califican de **0 a 30 puntos cada una**. "
-    "Cuando se combinan ambas, la calificación total va de **0 a 60 puntos**.")
+st.info("📊 **Notas de las evaluaciones:** Las pruebas de **Matemáticas** y **Lenguaje** se califican de **0 a 50 puntos cada una**. "
+    "Cuando se combinan ambas, la calificación total va de **0 a 100 puntos**.")
 
 # ---------------- Pestañas ----------------
 tabs = st.tabs(['Resultados IEMs', 'Resultados Individuales'])
@@ -69,7 +69,7 @@ with tabs[0]:
 
     # Filtrado de datos según selección
     df_filtered = df.copy()
-
+    df_filtered['CALIFICACION'] = df_filtered['CALIFICACION']*1.666
     materias = '(Matemáticas y Lenguaje)'
 
     if selected_iem != 'Todas':
@@ -131,7 +131,7 @@ with tabs[0]:
         # ---------------- Tabla pivote con desempeño por competencia ----------------
         df_pivot = df_filtered.pivot_table(
             index='NOMBRE IEM', columns='COMPETENCIA', values='CALIFICACION',
-            aggfunc=lambda x: np.round(x.mean() * 100, 2)
+            aggfunc=lambda x: np.round((x.mean()/1.666) * 100, 2)
         )
 
         st.subheader("📊 Desempeño Promedio por Competencia (0-100)")
@@ -154,7 +154,7 @@ with tabs[0]:
         
         df_pivot = df_filtered.pivot_table(
             index='NOMBRE IEM', columns='COMPETENCIA', values='CALIFICACION',
-            aggfunc=lambda x: np.round(x.mean() * 100, 2)
+            aggfunc=lambda x: np.round((x.mean()/1.666) * 100, 2)
         )
         st.subheader("📊 Desempeño Promedio por Competencia (0-100)")
         st.dataframe(df_pivot, use_container_width=True)
@@ -254,6 +254,7 @@ with tabs[1]:
 
     if selected_cod in df['NUM_DOCUMENTO'].unique():
         df_cod = df[df['NUM_DOCUMENTO']==selected_cod].copy()
+        df_cod['CALIFICACION'] = df_cod['CALIFICACION']*1.666
 
         r1, r2, r3 = st.columns(3) 
 
@@ -275,7 +276,7 @@ with tabs[1]:
         
         df_pivot = df_cod.pivot_table(
             index='COMPETENCIA', columns='NUM_DOCUMENTO', values='CALIFICACION',
-            aggfunc=lambda x: np.round(x.mean() * 100, 2)
+            aggfunc=lambda x: np.round((x.mean()/1.666) * 100, 2)
         )
         st.subheader("📊 Desempeño Promedio por Competencia (0-100)")
         st.dataframe(df_pivot, use_container_width=True)
